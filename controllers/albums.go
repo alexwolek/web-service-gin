@@ -9,13 +9,11 @@ import (
 
 func AddAlbumsController(engine *gin.Engine) {
 	albums := engine.Group("/albums")
-	AddAlbumRoutes(albums)
-}
-
-func AddAlbumRoutes(routerGroup *gin.RouterGroup) {
-	routerGroup.GET("", getAllAlbums)
-	routerGroup.GET("/:id", getAlbumByID)
-	routerGroup.POST("", addAlbum)
+	{
+		albums.GET("", getAllAlbums)
+		albums.GET("/:id", getAlbumByID)
+		albums.POST("", addAlbum)
+	}
 }
 
 // albums slice to seed record album data.
