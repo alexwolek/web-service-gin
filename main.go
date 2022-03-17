@@ -10,9 +10,15 @@ import (
 
 func main() {
 
-	os.Setenv("AUDIENCE", "api")
-	os.Setenv("AUTHORITY", "https://demo.identityserver.io")
-	os.Setenv("PORT", "8080")
+	if os.Getenv("AUDIENCE") == "" {
+		os.Setenv("AUDIENCE", "api")
+	}
+	if os.Getenv("AUTHORITY") == "" {
+		os.Setenv("AUTHORITY", "https://demo.identityserver.io")
+	}
+	if os.Getenv("PORT") == "" {
+		os.Setenv("PORT", "8080")
+	}
 
 	router := gin.Default()
 	router.Use(middleware.EnsureValidToken())
