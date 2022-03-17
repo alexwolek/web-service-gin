@@ -20,7 +20,9 @@ func main() {
 		os.Setenv("PORT", "8080")
 	}
 
-	router := gin.Default()
+	router := gin.New()
+	router.Use(gin.Logger())
+	router.Use(gin.Recovery())
 	router.Use(middleware.EnsureValidToken())
 
 	controllers.AddAlbumsController(router)

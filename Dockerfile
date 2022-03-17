@@ -22,6 +22,9 @@ WORKDIR /
 
 COPY --from=build /web-service-gin /web-service-gin
 
+ENV GIN_MODE=release
+ENV PORT=8080
+EXPOSE 80
 EXPOSE 8080
 
 USER nonroot:nonroot
