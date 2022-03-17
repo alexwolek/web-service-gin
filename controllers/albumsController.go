@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"example/web-service-gin/models"
+	"example/web-service-gin/albums"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -18,7 +18,7 @@ func AddAlbumsController(engine *gin.Engine) {
 
 // getAllAlbums responds with the list of all albums as JSON.
 func getAllAlbums(c *gin.Context) {
-	albums := models.GetAllAlbums()
+	albums := albums.GetAllAlbums()
 
 	c.IndentedJSON(http.StatusOK, albums)
 }
@@ -27,7 +27,7 @@ func getAllAlbums(c *gin.Context) {
 // parameter sent by the client, then returns that album as a response.
 func getAlbumByID(c *gin.Context) {
 	id := c.Param("id")
-	album := models.GetAlbumByID(id)
+	album := albums.GetAlbumByID(id)
 	if album == nil {
 		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
 	} else {
@@ -37,7 +37,7 @@ func getAlbumByID(c *gin.Context) {
 
 // addAlbum adds an album from JSON received in the request body.
 func addAlbum(c *gin.Context) {
-	var newAlbum models.Album
+	var newAlbum albums.Album
 
 	// Call BindJSON to bind the received JSON to newAlbum.
 	if err := c.BindJSON(&newAlbum); err != nil {
@@ -45,6 +45,6 @@ func addAlbum(c *gin.Context) {
 	}
 
 	// Add the new album to the collection.
-	models.AddNewAlbum(newAlbum)
+	albums.AddNewAlbum(newAlbum)
 	c.IndentedJSON(http.StatusCreated, newAlbum)
 }
