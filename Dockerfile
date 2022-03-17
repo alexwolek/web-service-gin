@@ -1,6 +1,9 @@
 # syntax=docker/dockerfile:1
 
-FROM golang:1.18-alpine
+##
+## Build
+##
+FROM golang:1.18-buster AS build
 
 WORKDIR /app
 
@@ -10,6 +13,17 @@ RUN go mod download
 
 RUN go build -o /web-service-gin
 
+##
+## Deploy
+##
+FROM gcr.io/distroless/base-debian10
+
+WORKDIR /
+
+COPY --from=build /web-service-gin /web-service-gin
+
 EXPOSE 8080
 
-CMD [ "/web-service-gin" ]
+USER nonroot:nonroot
+
+ENTRYPOINT ["/web-service-gin"]
