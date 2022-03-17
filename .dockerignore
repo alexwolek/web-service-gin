@@ -1,0 +1,12 @@
+#Ignore the .github directory
+.github/
+
+#Ignore the .vscode directory
+.vscode/
+
+#Ignoring git and cache folders
+.git
+.cache
+
+#Ignoring all the markdown files
+*.md
