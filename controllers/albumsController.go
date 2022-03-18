@@ -7,8 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddAlbumsController(engine *gin.Engine) {
-	albums := engine.Group("/albums")
+func AddAlbumsController(engine *gin.RouterGroup, handlers ...gin.HandlerFunc) {
+	albums := engine.Group("/albums", handlers...)
 	{
 		albums.GET("", getAllAlbums)
 		albums.GET("/:id", getAlbumByID)

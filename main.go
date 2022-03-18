@@ -23,9 +23,11 @@ func main() {
 	router := gin.New()
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
-	router.Use(middleware.EnsureValidToken())
 
-	controllers.AddAlbumsController(router)
+	controllers.AddHealthCheck(router)
+
+	protectedRoutes := router.Group("/", middleware.EnsureValidToken())
+	controllers.AddAlbumsController(protectedRoutes)
 
 	router.Run()
 }
